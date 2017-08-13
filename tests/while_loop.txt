@@ -1,0 +1,14 @@
+mov r0,5
+mov r1,1
+mov r2,0
+
+#test cmpq r0,rz
+sete r3
+beq r3,rz,whileLoop
+j exit
+
+#whileLoop add r2,r2,r0
+add r0:-1
+j test
+
+#exit end

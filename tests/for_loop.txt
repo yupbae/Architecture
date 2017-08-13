@@ -1,0 +1,18 @@
+mov r0,5
+mov r1,1
+mov r2,1
+
+#test cmpq r1,r0
+sete r3
+bne r3,rz,exit
+cmpq r1,r0
+setl r3
+bne r3,rz,loop
+j exit
+
+#loop mul r2,r2,r1
+add r1:1
+j test
+
+#exit mul r2,r2,r1
+end

@@ -1,0 +1,71 @@
+mov r0,500
+mov r1,2
+sto r0:rz:0:0,r1;
+mov r1,8
+sto r0:rz:0:1,r1;
+mov r1,30
+sto r0:rz:0:2,r1;
+mov r1,58
+sto r0:rz:0:3,r1;
+mov r1,67
+sto r0:rz:0:4,r1;
+mov r1,90
+sto r0:rz:0:5,r1;
+mov r1,120
+sto r0:rz:0:6,r1;
+
+
+mov r1,0
+mov r2,6
+mov r3,22
+mov r9,-1
+jl push
+j exit
+
+
+#push lea rsp,rsp:rz:*:-4
+sto rsp:rz:0:1,r3
+sto rsp:rz:0:2,r2
+sto rsp:rz:0:3,r1
+sto rsp:rz:0:4,rad
+j function
+
+#pop lod r1,rsp:rz:0:3
+lod r2,rsp:rz:0:2
+lod r3,rsp:rz:0:1
+lod r4,rsp:rz:0:4
+jr rad
+
+#function jl pop
+cmpq r1,r2
+sete r4
+bne r4,rz,indexEq
+cmpq r1,r2
+setg r5
+bne r5,rz,wrap
+add r6,r1,r2
+srl r6,1
+lod r7,r0:r6:1:0
+beq r3,r7,found
+cmpq r3,r7
+setl r5
+bne r5,rz,left
+add r6:1
+mov r1,r6
+jl push
+jl function
+
+#found mov r9,r6
+lod r4,rbp:rz:*:*
+jr r4
+
+#left add r6:-1
+mov r2,r6
+jl push
+
+#indexEq lod r7,r0:r1:1:0
+beq r3,r7,found
+j wrap
+
+#wrap lea rsp,rbp
+#exit end
